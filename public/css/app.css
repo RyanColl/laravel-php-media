@@ -84,35 +84,7 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-.data-form {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.user-fieldset {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-}
-.info {
-  padding: 2em;
-  overflow-wrap: break-word;
-  width: 300px;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background: rgba(0,0,0,0.5);
-  border-radius: 12px;
-  color: white;
-}
-.info p {
-  width: 100%;
-}
+
 hr {
   margin: 1rem 0;
   color: inherit;
