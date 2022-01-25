@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\CookieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,3 +31,6 @@ if(isset($_GET['file'])) {
 Route::get('upload', [FileUploadController::class, 'createForm']);
 
 Route::post('upload', [FileUploadController::class, 'fileUploadPost'])->name('file.upload.post');
+
+Route::get('/cookie/set', [CookieController::class, 'setCookie']);
+Route::get('/cookie/get', [CookieController::class, 'getCookie']);

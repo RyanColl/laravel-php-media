@@ -57,61 +57,13 @@
 
     <!-- PHP -->
     <div class="data-form">
-        <div class="panel-body">
-
-            @if ($message = Session::get('success'))
+            @if ($cookie = Session::get('cookie'))
                 <div class="alert alert-success alert-block">
                     <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
-                    <strong>{{ $message }}</strong>
-                    <?php
-                        require_once(app_path().'/includes/upload.php')
-                    ?>
+                    <strong>{{ $cookie }}</strong>
                 </div>
             @endif
-            @if ($message = Session::get('failure'))
-                <div class="alert alert-danger alert-block">
-                    <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
-                    <strong value=>{{ Session::get('failure') }}</strong>
-                    <strong><a href="#file_constraints">constraints below</a></strong>
-                    <!-- <strong>{{ Session::get('file') }}</strong> -->
-                </div>
-            @endif
-            @if ($message = Session::get('deny'))
-                <div class="alert alert-danger alert-block">
-                    <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
-                    <strong >{{ Session::get('deny') }}</strong>
-                    <strong><a href="#file_constraints">constraints below</a></strong>
-                    <!-- <strong>{{ Session::get('file') }}</strong> -->
-                </div>
-            @endif
-            @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <strong>Whoops!</strong> There were some problems with your input.
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <input type="file" name="file" class="form-control">
-                    </div>
-
-                    <div class="col-md-6">
-                        <button type="submit" name="file_submit" class="btn btn-success">Upload</button>
-                    </div>
-
-                </div>
-            </form>
-
-            </div>
-            <?php include(app_path().'/includes/regex.php'); ?>
+            <?php include(app_path().'/includes/cookies/cookies.php'); ?>
     </div>
     <div class="data-form">
         <span class="data-span">
