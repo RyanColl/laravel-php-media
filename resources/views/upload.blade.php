@@ -17,7 +17,8 @@
         <div class="panel-body">
 
             <?php 
-                require_once(app_path().'/includes/upload.php');
+                
+                // require_once(app_path().'/includes/upload.php');
             ?>
 
         </div>

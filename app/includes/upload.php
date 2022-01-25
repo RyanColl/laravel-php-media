@@ -8,7 +8,7 @@ if(is_resource($dir_handle))
     {
         if(strlen($file_name)>2) {
             echo "<br>";
-            echo("File Name: " . $file_name);
+            echo("New File Name: " . $file_name);
         }
     }
     // closing the directory

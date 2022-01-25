@@ -17,5 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+if(isset($_GET['file'])) {
+    $name = $_GET['file'];
+    $ext = pathinfo($name)['extension'];
+    $originalName = str_replace(".$ext", "", $name);
+    $fileuploadRegex = "/^[^A-z1-9]/";
+    // dd($name['extension']);
+    if(preg_match($fileuploadRegex, $originalName)) {
+        die('regex for file is incorrect. <a href="/">Return</a>');
+    }
+}
+Route::get('upload', [FileUploadController::class, 'createForm']);
 
 Route::post('upload', [FileUploadController::class, 'fileUploadPost'])->name('file.upload.post');

@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 class FileUploadController extends Controller
 {
+    public function createForm(){
+        return view('upload');
+    }
+    public function deny() {
+        return back()
+            ->with('denied', 'denied due to regex error');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,13 +23,10 @@ class FileUploadController extends Controller
         $name = $request->file->getClientOriginalName();
         $ext = $request->file->extension();
         $originalName = str_replace(".$ext", "", $name);
-        $fileuploadRegex = "/[aeiou]/";
-        
-        $fileNameMatch = preg_match($fileuploadRegex, $originalName);
-
-        if($fileNameMatch) {
+        $fileuploadRegex = "/^[^A-z1-9]*$/i";
+        if(!preg_match($fileuploadRegex, $originalName)) {
             return back()
-            ->with('failure',"$name did not pass the regex. You Need to have a filename that matches the.")
+            ->with('failure',"$name did not pass the regex. You Need to have a filename that matches the")
             ->with('file',$name);
         }
 

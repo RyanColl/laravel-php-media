@@ -61,7 +61,7 @@
 
             @if ($message = Session::get('success'))
                 <div class="alert alert-success alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
                     <strong>{{ $message }}</strong>
                     <?php
                         require_once(app_path().'/includes/upload.php')
@@ -70,8 +70,16 @@
             @endif
             @if ($message = Session::get('failure'))
                 <div class="alert alert-danger alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
                     <strong value=>{{ Session::get('failure') }}</strong>
+                    <strong><a href="#file_constraints">constraints below</a></strong>
+                    <!-- <strong>{{ Session::get('file') }}</strong> -->
+                </div>
+            @endif
+            @if ($message = Session::get('deny'))
+                <div class="alert alert-danger alert-block">
+                    <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
+                    <strong >{{ Session::get('deny') }}</strong>
                     <strong><a href="#file_constraints">constraints below</a></strong>
                     <!-- <strong>{{ Session::get('file') }}</strong> -->
                 </div>
@@ -87,7 +95,7 @@
                 </div>
             @endif
 
-            <form action="/upload" method="POST" enctype="multipart/form-data">
+            <form action="/upload" method="GET" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
 
