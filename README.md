@@ -2,8 +2,10 @@
 
 Today I am going to go over how this app works and what it is doing. 
 
-#### Clone => [clone](https://github.com/RyanColl/Laravel-React-Files-Regex.git)
-#### Install => [npm i]()
+#### Clone => 
+1. Open a terminal and run the command ```git clone https://github.com/RyanColl/Laravel-React-Files-Regex.git```
+#### Install => 
+1. Open a terminal and execute the command ```npm i```
 ### Run => 
 1. Open two terminals
 2. In the first terminal, execute the command ```npm run watch```
