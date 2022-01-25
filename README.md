@@ -188,6 +188,7 @@ $licenseRegex = "/(^[A-Z]{3}[\s]?[0-9]{3}$|^[0-9]{3}[\s]?[A-Z]{3}$)/";
 $streetRegex = "/^[0-9]{3,5}[\s]{1}[A-Z]{1}[a-z]{0,14}[\s]{1}Street$/";
 $birthdayRegex = "/(^([JAN]|[FEB]|[MAR]|[APR]|[MAY]|[JUN]|[JUL]|[AUG]|[SEP]|[OCT]|[NOV]|[DEC]){3}-([0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})-([0-1]{1}[0-9]{3}|20[0-2]{1}[0-1]{1})$|^JAN-([0-1]{1}[0-9]{1}|2[0-5]{1})-2022)$/";
 $socialRegex = "/^[1-9]{3}[\s]*[1-9]{3}[\s]*[1-9]{3}/";
+$fileuploadRegex = "/^[a-z][^0-9]*$/i";
 ```
 
 Next we use isset and the GET request object to capture the form submitting for all forms. Here is an example of one of the issets. We have six in total, one for each regex:
