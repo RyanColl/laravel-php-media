@@ -6,7 +6,7 @@ function getRegexFormForSocial() {
             <fieldset class='user-fieldset'>
             <div>
             <legend id='social_form'>Please enter the following information: </legend>
-            <h4><b>proper format for 7 digit phone number:</b></h4>
+            <h4><b>proper format for a social insurance number:</b></h4>
             <p><pre>
             9 digits in length, all together -> 
                             <b>123456789</b>

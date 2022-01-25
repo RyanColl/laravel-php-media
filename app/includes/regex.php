@@ -1,15 +1,10 @@
 <?php
-$sevenNumRegex = "/^\d{3}([-]?|[\s]*)\d{4}$/";
-$tenNumRegex = '/(^\d{3}|^\(\d{3}\))([-]?|[\s]*)\d{3}([-]?|[\s]*)\d{4}$/';
+$sevenNumRegex = "/^[1-9]{3}([-]?|[\s]*)[1-9]{4}$/";
+$tenNumRegex = '/(^[1-9]{3}|^\([1-9]{3}\))([-]?|[\s]*)[1-9]{3}([-]?|[\s]*)[1-9]{4}$/';
 $licenseRegex = "/(^[A-Z]{3}[\s]?[0-9]{3}$|^[0-9]{3}[\s]?[A-Z]{3}$)/";
 $streetRegex = "/^[0-9]{3,5}[\s]{1}[A-Z]{1}[a-z]{0,14}[\s]{1}Street$/";
-$birthdayRegex = "/(^[JFMASONDEBRYPILUGSOCTVD]{3}-([0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})-([0-1]{1}[0-9]{3}|20[0-2]{1}[0-1]{1})$|JAN-([0-1]{1}[0-9]{1}|2[0-5]{1})-2022)/";
-$socialRegex = "/a/";
-
-if(isset($_POST['file'])) {
-    $file = $_POST['file'];
-    echo "<h1>$file</h1>";
-}
+$birthdayRegex = "/(^[JFMASONDEBRYPILUGSOCTVD]{3}-([0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})-([0-1]{1}[0-9]{3}|20[0-2]{1}[0-1]{1})$|^JAN-([0-1]{1}[0-9]{1}|2[0-5]{1})-2022)$/";
+$socialRegex = "/^[1-9]{3}[\s]*[1-9]{3}[\s]*[1-9]{3}$/";
 
 if(isset($_GET['phone_number_seven_submit']))
 {
@@ -78,9 +73,11 @@ if(isset($_GET['birthday_submit']))
     echo "<a href='/'>Clear</a>";
 }
 
-require_once(app_path().'/includes/regexes/userForm.php');
+if(isset($_GET["userform_submit"])) {
+    require_once(app_path().'/includes/regexes/userFormRegex.php');
+}
 
-
+    require_once(app_path().'/includes/regexes/userForm.php');
     require_once(app_path().'/includes/regexes/sevenDigitRegex.php');
     require_once(app_path().'/includes/regexes/tenDigitRegex.php');
     require_once(app_path().'/includes/regexes/licenseRegex.php');

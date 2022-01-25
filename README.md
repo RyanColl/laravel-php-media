@@ -1,6 +1,14 @@
 # PHP - Laravel
 
 Today I am going to go over how this app works and what it is doing. 
+
+#### Clone => [clone](https://github.com/RyanColl/Laravel-React-Files-Regex.git)
+#### Install => [npm i]()
+### Run => 
+1. Open two terminals
+2. In the first terminal, execute the command ```npm run watch```
+3. In the second terminal, execute the command ```npm run serve```
+4. Navigate to [localhost:8000](http://localhost:8000) to see results
 ## React Component
 
 Our main page has a tiny React component implemented as an example of React in Laravel.
@@ -36,8 +44,8 @@ class FileUploadController extends Controller
 
         if($fileNameMatch) {
             return back()
-            ->with('failure',"$originalName did not pass the regex. You Need to have a filename that matches the.")
-            ->with('file',$originalName);
+            ->with('failure',"$name did not pass the regex. You Need to have a filename that matches the.")
+            ->with('file',$name);
         }
 
         $request->validate([
@@ -61,7 +69,7 @@ $ext = $request->file->extension();
 $originalName = str_replace(".$ext", "", $name);
 $fileuploadRegex = "/[aeiou]/";
 
-$fileNameMatch = preg_match($fileuploadRegex, $originalName);
+$fileNameMatch = preg_match($fileuploadRegex, $namw);
 
 if($fileNameMatch) {
     return back()
@@ -91,7 +99,43 @@ return back()
     ->with('success','You have successfully upload file.')
     ->with('file',$fileName);
 ```
+And it is received on the client with this code:
+```php
+@if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+        <?php
+            require_once(app_path().'/includes/upload.php')
+        ?>
+    </div>
+@endif
+```
+Inside of this code we requre upload.php, which uses file system to read through the list of files currently in the upload directory, and displays them on the screen. This is upload.php:
+```php
+<?php
+$path = base_path();
+$dir_handle = opendir("$path/public/uploads/");
+if(is_resource($dir_handle))
+{
+    echo isset($_POST['file']);
+    while(($file_name = readdir($dir_handle)) == true)
+    {
+        if(strlen($file_name)>2) {
+            echo "<br>";
+            echo("File Name: " . $file_name);
+        }
+    }
+    // closing the directory
+    closedir($dir_handle);
+}
+else
+{
+    echo("Directory Cannot Be Opened.");
+}
+```
 
+That leads us to the forms!
 ## Other Regex Form Inputs
 
 All logic for this app has been though out carfeully and seperated into pieces to allow for an easier read/follow along. In ```welcome.blade.php``` there is a section of code on line 106 that hosts all of our php work for regex forms: 
@@ -99,9 +143,54 @@ All logic for this app has been though out carfeully and seperated into pieces t
     <?php include(app_path().'/includes/regex.php'); ?>
 ```
 
-Inside of regex.php, we use isset and the get request to capture the form submitting for all forms. There is a form on the page that is collective, and individual forms as you scroll down the page. The individual forms contain all of the rules for each form input, and the form at the top is linked to each one individually as an example of the correct input. 
+Inside of regex.php, we start off by defining all of the regexes we will be using (except for fileregex, it sits in the controller for the backend architecture):
+```php
+$sevenNumRegex = "/^\d{3}([-]?|[\s]*)\d{4}$/";
+$tenNumRegex = '/(^\d{3}|^\(\d{3}\))([-]?|[\s]*)\d{3}([-]?|[\s]*)\d{4}$/';
+$licenseRegex = "/(^[A-Z]{3}[\s]?[0-9]{3}$|^[0-9]{3}[\s]?[A-Z]{3}$)/";
+$streetRegex = "/^[0-9]{3,5}[\s]{1}[A-Z]{1}[a-z]{0,14}[\s]{1}Street$/";
+$birthdayRegex = "/(^[JFMASONDEBRYPILUGSOCTVD]{3}-([0-2]{1}[0-9]{1}|[3]{1}[0-1]{1})-([0-1]{1}[0-9]{3}|20[0-2]{1}[0-1]{1})$|JAN-([0-1]{1}[0-9]{1}|2[0-5]{1})-2022)/";
+$socialRegex = "/^[1-9]{3}[\s]*[1-9]{3}[\s]*[1-9]{3}/";
+```
 
-If you enter into the form at the top all of the values and press submit, the form will tell you if all of the values pass their individual regexes, and if they do, say thank you and display the info. If any of the regexes fail, it will display failure and the reason for it.
+Next we use isset and the GET request object to capture the form submitting for all forms. Here is an example of one of the issets. We have six in total, one for each regex:
+```php
+if(isset($_GET['license_plate_submit']))
+{
+    $license = $_GET['license_plate'];
+    $matchlicense = preg_match($licenseRegex, $license);
+    if($matchlicense) {
+        echo "Submitted license: <h3><b>$license</b></h3> <h5><b>is</b></h5> a valid license plate number";
+    } else {
+        echo "Submitted license: <h3><b>$license</b></h3> <h5><b>is not</b></h5> a valid license plate number";
+    }
+    echo "<a href='/'>Clear</a>";
+}
+```
+In this isset we are waiting for a submit button with a name of "license_plate_submit". When pressed, the license plate value that the user inputs is read from ```$license = $_GET['license_plate'];```. We then apply the input and the regex together in the preg match, and return the appropriate repsonse. We also indicate a "clear" option for simplicity.
+
+We require all of the other forms from their individual files on lines 77-84:
+```php
+require_once(app_path().'/includes/regexes/userForm.php');
+require_once(app_path().'/includes/regexes/sevenDigitRegex.php');
+require_once(app_path().'/includes/regexes/tenDigitRegex.php');
+require_once(app_path().'/includes/regexes/licenseRegex.php');
+require_once(app_path().'/includes/regexes/streetRegex.php');
+require_once(app_path().'/includes/regexes/birthdayRegex.php');
+require_once(app_path().'/includes/regexes/socialRegex.php');
+require_once(app_path().'/includes/regexes/fileRegex.php');
+```
+The first require, the user form, is the top form you see on the page. The other requires are the individual forms you see as you scroll down the page. The individual forms contain the rules for each specific form input, and the form at the top is linked to each one individually as an example of the correct input. 
+
+If you enter into the form at the top all of the values and press submit, the form will tell you if all of the values pass their individual regexes, and if they do, say thank you and display the info. If any of the regexes fail, it will display failure and the reason for it. This time, we are importing the file conditionally, only after the userform has been submitted:
+```php
+if(isset($_GET["userform_submit"])) {
+    require_once(app_path().'/includes/regexes/userFormRegex.php');
+}
+```
+
+```userFormRegex.php``` gives us the logic we need to capture the individual inputs from the user form and run them against the regex. If there are errors at any step, then the user is made aware that specific step has failed.
+
 
 That is the basis of my Laravel App! 
 

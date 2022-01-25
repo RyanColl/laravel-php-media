@@ -22,8 +22,8 @@ class FileUploadController extends Controller
 
         if($fileNameMatch) {
             return back()
-            ->with('failure',"$originalName did not pass the regex. You Need to have a filename that matches the.")
-            ->with('file',$originalName);
+            ->with('failure',"$name did not pass the regex. You Need to have a filename that matches the.")
+            ->with('file',$name);
         }
 
         $request->validate([

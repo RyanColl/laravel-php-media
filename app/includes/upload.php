@@ -1,6 +1,4 @@
 <?php
-
-
 $path = base_path();
 $dir_handle = opendir("$path/public/uploads/");
 if(is_resource($dir_handle))

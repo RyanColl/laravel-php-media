@@ -12,7 +12,7 @@ function getUserForm()
                     <input type='text' id='phone_number_7_userform' name='phone_number_7_userform'><br>
                     <label for='phone_number_userform'>Please enter your 10 Digit Phone Number</label>
                     <a href='#ten_form'>See Below</a>
-                    <input type='text' id='phone_number_10_userform' name='phone_number_userform'><br>
+                    <input type='text' id='phone_number_10_userform' name='phone_number_10_userform'><br>
                     <label for='license_plate_userform'>Please enter your License Plate Number</label>
                     <a href='#license_form'>See Below</a>
                     <input type='text' id='license_plate_userform' name='license_plate_userform'><br>
@@ -25,7 +25,7 @@ function getUserForm()
                     <label for='regex_social_userform'>Please enter your social</label>
                     <a href='#social_form'>See Below</a>
                     <input type='text' id='regex_social_userform' name='regex_social_userform'><br>
-                    <input type='submit' name='birthday_submit' value='Submit'><br>
+                    <input type='submit' name='userform_submit' value='Submit'><br>
                 </div>
             </fieldset>
         </form>
