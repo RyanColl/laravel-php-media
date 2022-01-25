@@ -23,7 +23,7 @@ class FileUploadController extends Controller
         $name = $request->file->getClientOriginalName();
         $ext = $request->file->extension();
         $originalName = str_replace(".$ext", "", $name);
-        $fileuploadRegex = "/^[^A-z1-9]*$/i";
+        $fileuploadRegex = "/^[a-z][^0-9]*$/i";
         if(!preg_match($fileuploadRegex, $originalName)) {
             return back()
             ->with('failure',"$name did not pass the regex. You Need to have a filename that matches the")

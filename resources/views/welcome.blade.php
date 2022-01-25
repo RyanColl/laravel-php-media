@@ -95,7 +95,7 @@
                 </div>
             @endif
 
-            <form action="/upload" method="GET" enctype="multipart/form-data">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
 

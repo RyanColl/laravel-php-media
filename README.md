@@ -40,7 +40,7 @@ class FileUploadController extends Controller
         $name = $request->file->getClientOriginalName();
         $ext = $request->file->extension();
         $originalName = str_replace(".$ext", "", $name);
-        $fileuploadRegex = "/[aeiou]/";
+        $fileuploadRegex = "/^[a-z][^0-9]*$/i";
         
         $fileNameMatch = preg_match($fileuploadRegex, $originalName);
 
@@ -69,14 +69,14 @@ When the file upload occurs, and the data is captured by laravel in the backend,
 $name = $request->file->getClientOriginalName();
 $ext = $request->file->extension();
 $originalName = str_replace(".$ext", "", $name);
-$fileuploadRegex = "/[aeiou]/";
+$fileuploadRegex = "/^[a-z][^0-9]*$/i";
 
-$fileNameMatch = preg_match($fileuploadRegex, $namw);
+$fileNameMatch = preg_match($fileuploadRegex, $name);
 
 if($fileNameMatch) {
     return back()
-    ->with('failure',"$originalName did not pass the regex. You Need to have a filename that matches the.")
-    ->with('file',$originalName);
+    ->with('failure',"$name did not pass the regex. You Need to have a filename that matches the.")
+    ->with('file',$name);
 }
 ```
 If the regex fails, then the response is returned and accepted on the front end using this code:
@@ -136,6 +136,41 @@ else
     echo("Directory Cannot Be Opened.");
 }
 ```
+
+We can also capture just the GET request from the file: 
+```php
+<form action="/upload" method="GET" enctype="multipart/form-data">
+    @csrf
+    <div class="row">
+        <div class="col-md-6">
+            <input type="file" name="file" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <button type="submit" name="file_submit" class="btn btn-success">Upload</button>
+        </div>
+    </div>
+</form>
+```
+I'm not sure why we would do that, but we could use an input tag type file inside of a form that has an action of ```'/upload'``` and a method of GET. Inside of web.php, we would capture the event in front of the routes, so that if our file name does not match the regex, we can run die on the program. Inside of web.php we write:
+```php
+Route::get('/', function () {
+    return view('welcome');
+});
+if(isset($_GET['file'])) {
+    $name = $_GET['file'];
+    $ext = pathinfo($name)['extension'];
+    $originalName = str_replace(".$ext", "", $name);
+    $fileuploadRegex = "/^[a-z][^0-9]*$/i";
+    // dd($name['extension']);
+    if(preg_match($fileuploadRegex, $originalName)) {
+        die('regex for file is incorrect. <a href="/">Return</a>');
+    }
+}
+Route::get('upload', [FileUploadController::class, 'createForm']);
+
+Route::post('upload', [FileUploadController::class, 'fileUploadPost'])->name('file.upload.post');
+```
+The isset waits for the GET request, and before it can be given to a route, we verify if the regex has passed. We do this to avoid the file being uploaded if the regex doesn't pass. I did not look into how to get a file to upload with a GET request, and I am unsure if it is possible, so for this project, I will leave the form on POST.
 
 That leads us to the forms!
 ## Other Regex Form Inputs

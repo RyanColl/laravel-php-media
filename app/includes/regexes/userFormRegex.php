@@ -48,7 +48,7 @@ if(!preg_match($socialRegex, $ufSocial)) {
     }
     
 }
-if(!preg_match($socialRegex, $ufSocial) && !preg_match($birthdayRegex, $ufBirthday) && !preg_match($streetRegex, $ufStreet) && !preg_match($licenseRegex, $ufLicense) && !preg_match($tenNumRegex, $ufTen) && !preg_match($sevenNumRegex, $ufSeven)) {
+if(!preg_match($socialRegex, $ufSocial) || !preg_match($birthdayRegex, $ufBirthday) || !preg_match($streetRegex, $ufStreet) || !preg_match($licenseRegex, $ufLicense) || !preg_match($tenNumRegex, $ufTen) || !preg_match($sevenNumRegex, $ufSeven)) {
     echo "<h3><a href='/'>Clear</a></h3>";
 }
 else {
