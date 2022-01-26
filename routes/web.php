@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\CookieController;
+use App\Http\Controllers\HttpController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(isset($_SESSION['username'])) {
+        return view('welcome')
+            ->with('session', 'empty');
+    } else {
+        return view('welcome')
+            ->with('session', 'empty');
+    }
+    
 });
 if(isset($_GET['file'])) {
     $name = $_GET['file'];
@@ -34,3 +42,5 @@ Route::post('upload', [FileUploadController::class, 'fileUploadPost'])->name('fi
 
 Route::get('/cookie/set', [CookieController::class, 'setCookie']);
 Route::get('/cookie/get', [CookieController::class, 'getCookie']);
+
+Route::get('/login', [HttpController::class, 'handleLogin']);

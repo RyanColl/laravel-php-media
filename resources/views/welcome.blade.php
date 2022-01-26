@@ -14,6 +14,12 @@
         .row {
             flex-wrap: nowrap !important;
         }
+        .hidden {
+            display: none !important;
+            scale: 0 !important;
+            transform: scale(0) !important;
+            visibility: hidden !important;
+        }
         .body {
             display: flex;
             justify-content: flex-start;
@@ -57,13 +63,28 @@
 
     <!-- PHP -->
     <div class="data-form">
-            @if ($cookie = Session::get('cookie'))
-                <div class="alert alert-success alert-block">
-                    <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
-                    <strong>{{ $cookie }}</strong>
-                </div>
-            @endif
-            <?php include(app_path().'/includes/cookies/cookies.php'); ?>
+        @if ($session = Session::get('session'))
+            <div class="alert alert-success alert-block">
+                <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
+                <strong>{{ $session }}</strong>
+            </div>
+        @endif
+        @if ($cookie = Session::get('cookie'))
+            <div class="alert alert-success alert-block">
+                <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
+                <strong>{{ $cookie }}</strong>
+            </div>
+        @endif
+        @if ($cookie = Session::get('id'))
+            <div class="alert alert-success alert-block">
+                <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
+                <strong>{{ $cookie }}</strong>
+            </div>
+            <?php include(app_path().'/includes/interface/loggedin.php'); ?>
+        @endif
+        @if (!(Session::get('id')) && !(Session::get('cookie')))
+        <?php include(app_path().'/includes/interface/sessions.php'); ?>
+        @endif
     </div>
     <div class="data-form">
         <span class="data-span">
