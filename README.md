@@ -155,6 +155,12 @@ session_destroy();
 echo "$LOGIN_URL";
 ```
 
+We echo out two divs to insert our data:
+```php
+echo "<div id='timestamp'></div>";
+echo "<h1 id='kstimestamp'></h1>";
+```
+
 ### 4. when logged out, save all the user data to log.txt
 
 I tackled this issue using the following code in both logout.php and killSession.php:
