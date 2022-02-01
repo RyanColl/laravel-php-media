@@ -19,7 +19,7 @@ This week, we have been asked to cover cookies and sessions in PHP. As usual, I 
 
 Here is a list of things that the app is required to do, and how I solved them.
 
-1. login.php must dynamically figure out its own name for the action setting for the form
+### 1. login.php must dynamically figure out its own name for the action setting for the form
 
 My interpretation of this is to create a dynamic action for the form. In this case, I have chosen to leave my form action blank, meaning whatever file the form is in, the action will return. In this case, because the form is in login.php, then the action will become login.php.
 ```html
@@ -30,7 +30,7 @@ password:<input type="password" name="password"><br>
 </form>
 ```
 
-2. each page should have at the top: logged in for 1h 13m 15s since 4:08pm Jan. 25
+### 2. each page should have at the top: logged in for 1h 13m 15s since 4:08pm Jan. 25
 
 This was fun to implement. I utilized the login time of the user and hints of JQuery to create a frontend to backend api. I have a php file, updateTime.php, that when called using JQuery like an api, echoes out the time since logged in for the user, on every page where the session exists!
 
@@ -82,7 +82,7 @@ if(isset($_SESSION['logintime'])) {
 }
 ```
 
-3. If the user delays more than 8 seconds, kill the session, tell the user you logged them out for security reasons, and offer a link to login.php
+### 3. If the user delays more than 8 seconds, kill the session, tell the user you logged them out for security reasons, and offer a link to login.php
 
 I tackled this issue again by using JQuery. JQuery allows us to use ajax to make api calls to our php files. Whatever the PHP file echoes out, is returned to ajax as a response. This response can be inserted into the inner html of a div. 
 
@@ -156,7 +156,7 @@ session_destroy();
 echo "$LOGIN_URL";
 ```
 
-4. when logged out, save all the user data to log.txt
+### 4. when logged out, save all the user data to log.txt
 
 I tackled this issue using the following code in both logout.php and killSession.php:
 ```php
@@ -168,7 +168,7 @@ function logData() {
 logData();
 ```
 
-5. when the user logs in, create a cookie too; all future authentication must check the session and the cookie
+### 5. when the user logs in, create a cookie too; all future authentication must check the session and the cookie
 
 I tackled this by creating a cookie after logging in, and everytime you visit a page: 
 ```php
@@ -185,7 +185,7 @@ if(!isset($_COOKIE['username'])) {
 This means that if a user somehow manages to create a session and get into our secret and private pages, the app would die because a cookie was not set upon entering these pages. This is a form of extra auth in our app.
 
 
-6. username and password combinations come from a file users.txt like this: 
+### 6. username and password combinations come from a file users.txt like this: 
 ```
 tiger,123
 jason,xyz
