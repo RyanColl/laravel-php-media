@@ -12,7 +12,6 @@ Today I am going to go over how this app works and what it is doing.
 3. In the second terminal, execute the command ```npm run serve```
 4. Navigate to [localhost:8000](http://localhost:8000) to see results
 
-
 ## Cookies and Sessions In Laravel
 
 This week, we have been asked to cover cookies and sessions in PHP. As usual, I will be using Laravel, so some of my routing may be different, but it should work the same on any system.
@@ -41,7 +40,7 @@ This is the request to bring JQuery libraries into the document.
 echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>";
 ```
 
-This code injects a script tag into the DOM that utilizes JQuery. Here, we run some javascript that awaits for the loading of the DOM, and then runs our timestamp function. It then sets an interval for every second to run the funtion again. The function timestamp makes an ajax request to updateTime.php. updateTime.php's echo is interpreted by the JQuery as a response, and the repsonse is injected into the inner html of a div with the id of 'timestamp'. 
+This code injects a script tag into the DOM that utilizes JQuery. Here, we run some JavaScript that awaits for the loading of the DOM, and then runs our timestamp function. It then sets an interval for every second to run the function again. The function timestamp makes an ajax request to updateTime.php. updateTime.php's echo is interpreted by the JQuery as a response, and the response is injected into the inner html of a div with the id of 'timestamp'. 
  ____
 ```php
 echo "
@@ -170,7 +169,7 @@ logData();
 
 ### 5. when the user logs in, create a cookie too; all future authentication must check the session and the cookie
 
-I tackled this by creating a cookie after logging in, and everytime you visit a page: 
+I tackled this by creating a cookie after logging in, and every time you visit a page: 
 ```php
 setcookie('username', $_SESSION['username'], time() + 8);
 ```
@@ -184,7 +183,6 @@ if(!isset($_COOKIE['username'])) {
 
 This means that if a user somehow manages to create a session and get into our secret and private pages, the app would die because a cookie was not set upon entering these pages. This is a form of extra auth in our app.
 
-
 ### 6. username and password combinations come from a file users.txt like this: 
 ```
 tiger,123
@@ -193,7 +191,7 @@ tony,abc
 whoever,654
 ```
 
-I tackled this issue using the following code when a get request is sent to login.php with username and password set. The following code gets the contents from our users.txt and turns it into an array by explodign it on every new line. This leaves us with an array of four strings. I go into a foreach loop with the new array, and inside we explose each statement on the comma. Example: ```tiger,123``` becomes an array of two elements, ```tiger``` and ```123```. We then match the username and password with the respective field, and if they both match, we do NOT kill the file. we simply return the function to avoid the die from running. If they do not match, we just immediately die with a link to login.
+I tackled this issue using the following code when a get request is sent to login.php with username and password set. The following code gets the contents from our users.txt and turns it into an array by exploding it on every new line. This leaves us with an array of four strings. I go into a foreach loop with the new array, and inside we explode each statement on the comma. Example: ```tiger,123``` becomes an array of two elements, ```tiger``` and ```123```. We then match the username and password with the respective field, and if they both match, we do NOT kill the file. we simply return the function to avoid the die from running. If they do not match, we just immediately die with a link to login.
 ```php
 function checkAuth() {
     $contents = file_get_contents("users.txt");
@@ -283,3 +281,5 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
