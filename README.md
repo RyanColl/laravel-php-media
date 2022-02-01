@@ -3,7 +3,7 @@
 Today I am going to go over how this app works and what it is doing. 
 
 #### Clone => 
-1. Open a terminal and run the command ```git clone https://github.com/RyanColl/Laravel-React-Files-Regex.git```
+1. Open a terminal and run the command ```git clone https://github.com/RyanColl/Laravel-React-Cookies-Session.git```
 #### Install => 
 1. Open a terminal and execute the command ```npm i```
 ### Run => 
