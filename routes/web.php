@@ -3,6 +3,7 @@
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\HttpController;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,4 +44,4 @@ Route::post('upload', [FileUploadController::class, 'fileUploadPost'])->name('fi
 Route::get('/cookie/set', [CookieController::class, 'setCookie']);
 Route::get('/cookie/get', [CookieController::class, 'getCookie']);
 
-Route::get('/login', [HttpController::class, 'handleLogin']);
+

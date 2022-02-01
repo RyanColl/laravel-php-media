@@ -5,7 +5,7 @@ $id = session_id();
 function getLoginForm() {
     $id = session_id();
     return "
-        <form action='/login' method='GET'>
+        <form action='/' method='GET'>
             <input class='hidden' value=".$id." type='text' name='id' id='id'>
             <label for='username'>Please Enter Your Username</label>
             <input type='text' id='username' name='username'><br>
@@ -18,12 +18,17 @@ function getLoginForm() {
 
 function getSignInForm() {
     return "
-    
+        
     ";
 }
 
 if(!isset($_GET['username'])) {
     echo getLoginForm();
-} else {
+} 
+if (isset($_GET['username']) && !isset($_SESSION['username'])) {
+    $_SESSION['username'] = $_GET['username'];
     echo "user logged in with id: $id";
+}
+if (isset($_SESSION['username'])) {
+    require_once(app_path().'/includes/interface/loggedin.php');
 }

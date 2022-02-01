@@ -5,15 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>React && Laraval</title>
-    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
-        #timestamp {
-            position: absolute;
-            top: 10%;
-            right: 10%;
-        }
         legend{
             text-align: center !important;
         }
@@ -56,7 +50,6 @@
             flex-direction: column;
         }
     </style>
-    
 </head>
 
 <body>
@@ -70,11 +63,27 @@
 
     <!-- PHP -->
     <div class="data-form">
-        
-        <?php 
-            echo "<script>window.location.replace('login.php')</script>";
-        ?>
-        
+        @if ($session = Session::get('session'))
+            <div class="alert alert-success alert-block">
+                <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
+                <strong>{{ $session }}</strong>
+            </div>
+        @endif
+        @if ($cookie = Session::get('cookie'))
+            <div class="alert alert-success alert-block">
+                <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
+                <strong>{{ $cookie }}</strong>
+            </div>
+        @endif
+        @if ($cookie = Session::get('id'))
+            <div class="alert alert-success alert-block">
+                <a href='/'><button type="button" class="close" data-dismiss="alert">×</button></a>
+                <strong>{{ $cookie }}</strong>
+            </div>
+        @endif
+        @if (!(Session::get('id')) && !(Session::get('cookie')))
+        <?php include(app_path().'/includes/interface/sessions.php'); ?>
+        @endif
     </div>
     <div class="data-form">
         <span class="data-span">
